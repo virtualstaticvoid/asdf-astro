@@ -28,11 +28,30 @@ get_platform() {
   [ "Linux" = "$(uname)" ] && echo "linux" || echo "darwin"
 }
 
+get_arch() {
+  local arch=$(uname -m)
+  case $arch in
+    amd64 | x86_64)
+      echo "amd64"
+      ;;
+    arm64)
+      echo "arm64"
+      ;;
+    i386 | i686)
+      echo "386"
+      ;;
+    *)
+      echo ""
+  esac
+}
+
 get_download_url() {
   local install_type=$1
   local tag=$2
   local version=$2
+
   local platform=$(get_platform)
+  local arch=$(get_arch)
 
   # HACK: asdf wants numeric version numbers, but most start with a "v"
   # since people usually tag releases in GitHub with a vX.X.X and _not_ X.X.X
@@ -42,7 +61,7 @@ get_download_url() {
     tag="v${tag}"
   fi
 
-  echo "https://github.com/astronomer/astro-cli/releases/download/${tag}/astro_${version}_${platform}_amd64.tar.gz"
+  echo "https://github.com/astronomer/astro-cli/releases/download/${tag}/astro_${version}_${platform}_${arch}.tar.gz"
 }
 
 install_plugin "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"
