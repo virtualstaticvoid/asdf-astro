@@ -8,6 +8,7 @@ Astronomer CLI [`astro`][util] plugin for [asdf](https://github.com/asdf-vm/asdf
 
 ```
 asdf plugin-add astro https://github.com/virtualstaticvoid/asdf-astro.git
+asdf install astro latest
 ```
 
 ## Use
